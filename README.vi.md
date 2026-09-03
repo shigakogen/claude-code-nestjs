@@ -38,6 +38,33 @@ Kiểm tra bằng `/memory`, `/agents`, `/mcp`, `/context`. Rồi commit `.claud
 
 Gỡ ra: `~/tools/claude-code-nestjs/uninstall.sh .`
 
+### Tùy chọn: giữ local, không chia sẻ với team
+
+Đang thử kit trên một repo dùng chung trước khi đề xuất cả team dùng? Dùng
+`.git/info/exclude` thay vì sửa `.gitignore` — file này nằm trong `.git/`, không bao giờ
+track hay commit, không ai khác thấy được:
+
+```bash
+cat >> .git/info/exclude <<'EOF'
+
+# kit claude-code-nestjs — chỉ local, không chia sẻ với team
+.claude/
+.mcp.json
+.env.mcp.example
+.env.mcp
+CLAUDE.md
+SERVICE_MAP.md
+EOF
+```
+
+`install.sh` cũng đã thêm 3 dòng vào `.gitignore` đang track (`.claude/settings.local.json`,
+`.claude/logs/`, `.env.mcp`) — nếu chưa commit, revert lại để file dùng chung không đổi:
+`git checkout -- .gitignore`.
+
+Nếu repo đã có sẵn `CLAUDE.md` của team trước khi chạy `install.sh`, đừng ignore cả
+`CLAUDE.md` — chỉ ignore `.claude/CLAUDE.md` — và tự bỏ dòng `@.claude/CLAUDE.md` mà
+`install.sh` đã thêm vào file đó, để không để lại dấu vết trỏ tới file không track.
+
 ### Yêu cầu
 
 | | |

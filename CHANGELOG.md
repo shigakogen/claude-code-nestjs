@@ -6,6 +6,11 @@ versioning follows [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- README: an optional "keep it local, not shared with the team" section documenting
+  `.git/info/exclude` as an alternative to committing the kit — for trying it on a shared
+  repo before proposing it to the team.
+
 ### Changed
 - `gate-dangerous.sh` is now branch-aware: any `git push`/`git merge`/`git rebase`/force
   `git branch -D` targeting `main`, `master` or `prod` is now denied outright rather than

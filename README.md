@@ -41,6 +41,33 @@ Verify with `/memory`, `/agents`, `/mcp`, `/context`. Then commit `.claude/` and
 
 Removing it: `~/tools/claude-code-nestjs/uninstall.sh .`
 
+### Optional: keep it local, not shared with the team
+
+Trying the kit on a shared repo before committing to it for the whole team? Use
+`.git/info/exclude` instead of editing `.gitignore` — it lives inside `.git/`, is never
+tracked or committed, and nothing in it is visible to teammates:
+
+```bash
+cat >> .git/info/exclude <<'EOF'
+
+# claude-code-nestjs kit — local only, not shared with the team
+.claude/
+.mcp.json
+.env.mcp.example
+.env.mcp
+CLAUDE.md
+SERVICE_MAP.md
+EOF
+```
+
+`install.sh` also added three lines to your tracked `.gitignore` (`.claude/settings.local.json`,
+`.claude/logs/`, `.env.mcp`) — if you haven't committed that yet, revert it so the shared file
+stays untouched: `git checkout -- .gitignore`.
+
+If the repo already had its own `CLAUDE.md` before you ran `install.sh`, don't ignore
+`CLAUDE.md` itself — only `.claude/CLAUDE.md` — and remove the `@.claude/CLAUDE.md` import
+line `install.sh` appended to it, so nothing points at an untracked file.
+
 ### Requirements
 
 | | |
