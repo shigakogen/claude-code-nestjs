@@ -1,0 +1,58 @@
+# {{SERVICE_NAME}}
+
+<!--
+  QUY TAC VANG: file nay < 200 dong, load o MOI session -> moi dong phai THAY DOI HANH VI.
+  Chi tiet theo thu muc -> dua vao .claude/rules/*.md (chi load khi cham file khop glob).
+-->
+
+NestJS {{NEST_VERSION}} / Node {{NODE_VERSION}} / TypeORM / {{PKG_MANAGER}}. {{ONE_LINE_PURPOSE}}
+
+## Layout
+- `src/controller/` — controller, guard, validate qua DTO
+- `src/service/` — business logic, ranh giới transaction
+- `src/entity/` — entity TypeORM
+- `src/dto/` — request/response DTO (class + class-validator)
+- `src/config/` — cấu hình, `data-source.ts`
+- `src/guard/` — auth guard
+- `src/migrations/` — migration TypeORM (bất biến sau khi merge)
+- `test/` — e2e test (`*.e2e-spec.ts`); unit test `*.spec.ts` đặt cạnh file nguồn
+
+## Build & test (npm)
+- Build:           `npm run build`
+- Unit test:        `npm run test`
+- Một test:         `npm run test -- <pattern>`
+- E2E:              `npm run test:e2e`
+- Lint + format:    `npm run lint`
+- Chạy local:       `docker compose up -d && npm run start:dev`
+
+## Conventions (bắt buộc)
+- Controller KHÔNG chứa business logic và KHÔNG trả entity TypeORM. Trả DTO trong `dto/`.
+- DTO là `class` với decorator `class-validator`, KHÔNG dùng `type`/`interface` — decorator dựa trên reflection, dùng type alias sẽ im lặng không validate gì cả.
+- Constructor injection, field `private readonly`.
+- Transaction chỉ mở trong `service/` qua `this.dataSource.transaction(async (manager) => {...})`. Bên trong callback dùng `manager`, không dùng repository đã inject.
+- Exception nghiệp vụ kế thừa `BusinessException`, map bởi `ExceptionFilter` đăng ký qua token `APP_FILTER` (không dùng `app.useGlobalFilters()` — cách đó không inject dependency được).
+- Body lỗi luôn theo schema `{ "code", "message", "traceId", "details" }`.
+- `ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true })` đăng ký global trong `main.ts`.
+- Log qua `Logger` của Nest. Không nối chuỗi. Không log PII (email, sđt, token, số thẻ).
+- Cấu hình đọc qua `ConfigService.get<T>()` với namespace `registerAs`, không đọc thẳng `process.env[...]`.
+- Migration TypeORM: chỉ THÊM file mới trong `src/migrations/`. Không sửa/xóa file đã có.
+- Quan hệ TypeORM mặc định `eager: false` — không set `eager: true`, không dùng lazy relation kiểu `Promise<T>`.
+
+## Guardrails (Claude tuân thủ nguyên văn)
+- Trước khi sửa `controller/`, `service/`, `entity/`, hoặc `migrations/`: đọc file rule tương ứng
+  trong `.claude/rules/` rồi mới lập kế hoạch.
+- Không thêm dependency vào `package.json` khi chưa được xác nhận. Nêu lý do + tác động trước.
+- Không đổi version NestJS / Node trong cùng commit với thay đổi nghiệp vụ.
+- Không tự chạy `git push`, `git commit --amend`, `git reset --hard`, `npm publish`.
+- Không viết test gọi mạng thật. Dùng `Test.createTestingModule` + mock provider.
+- MCP database chỉ để ĐỌC schema và `SELECT`/`EXPLAIN` trên DB local. Không DDL, không DML.
+- Không tạo module top-level mới; ưu tiên sửa module đang có.
+- Sửa xong code phải chạy test liên quan trước khi báo hoàn thành.
+- Hàm > ~40 dòng thì tách theo trách nhiệm, không theo độ dài.
+
+## Trước khi mở Merge Request
+- `npm run lint && npm run test` phải xanh.
+- Dùng skill `mr-checklist`. Cập nhật `CHANGELOG.md` mục `## Unreleased` nếu có ảnh hưởng người dùng.
+
+## Ngôn ngữ
+Trả lời và viết mô tả MR bằng tiếng Việt. Code, tên biến, commit message, log message bằng tiếng Anh.

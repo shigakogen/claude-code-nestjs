@@ -1,0 +1,9 @@
+{
+  "_comment": "Copy thành .claude/settings.local.json. File này KHÔNG commit (đã có trong .gitignore). Dùng cho tuỳ chọn cá nhân và server DB local.",
+  "permissions": {
+    "allow": [
+      "Bash(docker compose exec:*)"
+    ]
+  },
+  "enabledMcpjsonServers": ["gitlab", "context7", "db-local"]
+}

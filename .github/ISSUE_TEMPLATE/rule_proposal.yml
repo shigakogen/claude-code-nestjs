@@ -1,0 +1,38 @@
+name: Rule / skill / agent proposal
+description: Propose a new rule, skill or subagent for the kit.
+labels: [proposal]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Every always-loaded line costs tokens on every turn. Proposals are accepted when they fix
+        behaviour someone actually observed going wrong — repeatedly — not behaviour that might.
+  - type: textarea
+    id: observed
+    attributes:
+      label: What did the agent do wrong?
+      description: Be concrete. How many times have you seen it?
+    validations: { required: true }
+  - type: dropdown
+    id: layer
+    attributes:
+      label: Which layer should fix it?
+      description: Prefer the cheapest layer that works. A hook beats a rule; a rule beats a CLAUDE.md line.
+      options:
+        - hook (deterministic, zero ambient token cost)
+        - path-scoped rule (loads only for matching files)
+        - skill (loads only when triggered)
+        - subagent (separate context)
+        - CLAUDE.md line (always loaded — last resort)
+    validations: { required: true }
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed wording
+      description: Imperative and checkable. "Never return TypeORM entities from controllers", not "prefer clean layering".
+    validations: { required: true }
+  - type: input
+    id: scope
+    attributes:
+      label: Glob scope (for rules)
+      placeholder: "**/*.controller.ts"

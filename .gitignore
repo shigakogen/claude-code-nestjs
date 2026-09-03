@@ -1,0 +1,5 @@
+.env.mcp
+tests/tmp/
+*.bak
+.DS_Store
+.idea/

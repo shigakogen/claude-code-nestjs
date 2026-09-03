@@ -1,0 +1,58 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  shellcheck:
+    name: shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run shellcheck
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y shellcheck
+          shellcheck --severity=warning \
+            install.sh uninstall.sh tests/run.sh template/.claude/hooks/*.sh
+
+  test:
+    name: template self-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install jq
+        run: sudo apt-get update -qq && sudo apt-get install -y jq
+      - name: Run test suite
+        run: ./tests/run.sh
+
+  budget:
+    name: context budget
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: CLAUDE.md must stay small
+        run: |
+          lines=$(wc -l < template/.claude/CLAUDE.md.template)
+          echo "CLAUDE.md.template: $lines lines"
+          if [ "$lines" -gt 200 ]; then
+            echo "::error::CLAUDE.md.template is $lines lines (limit 200)."
+            echo "Move detail into template/.claude/rules/ instead of growing the always-loaded file."
+            exit 1
+          fi
+      - name: Rule files should stay short
+        run: |
+          status=0
+          for f in template/.claude/rules/*.md; do
+            n=$(wc -l < "$f")
+            echo "$f: $n lines"
+            if [ "$n" -gt 120 ]; then
+              echo "::warning file=$f::$n lines — consider splitting."
+            fi
+          done
+          exit $status

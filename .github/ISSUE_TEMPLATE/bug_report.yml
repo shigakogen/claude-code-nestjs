@@ -1,0 +1,48 @@
+name: Bug report
+description: Something in the kit does not work — installer, hook, rule not loading.
+labels: [bug]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which part?
+      options:
+        - install.sh / uninstall.sh
+        - hooks (gate-dangerous, protect-migrations, format-source, session-start)
+        - rules not loading
+        - agents / skills
+        - MCP servers
+        - docs
+    validations: { required: true }
+  - type: input
+    id: version
+    attributes:
+      label: Claude Code version
+      placeholder: "run: claude --version"
+    validations: { required: true }
+  - type: input
+    id: os
+    attributes:
+      label: OS / shell
+      placeholder: "macOS 15, zsh / Ubuntu 24.04, bash"
+    validations: { required: true }
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. ./install.sh ~/work/my-service
+        2. open claude, run /memory
+        3. ...
+    validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected vs actual
+    validations: { required: true }
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant output
+      description: Output of ./tests/run.sh, or the hook's stderr. Redact tokens and internal hostnames.
+      render: shell
