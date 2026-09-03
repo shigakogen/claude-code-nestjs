@@ -1,5 +1,7 @@
 # Troubleshooting
 
+🇻🇳 [Tiếng Việt](troubleshooting.vi.md)
+
 ## Rules never load
 
 **Symptom.** The agent violates a rule that is clearly written in `.claude/rules/`. `/context` does not list the rule file.

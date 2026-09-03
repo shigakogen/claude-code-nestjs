@@ -2,6 +2,8 @@
 
 The installer gets you a working baseline. These are the adjustments that make it fit *your* repo. Budget ten minutes.
 
+🇻🇳 [Tiếng Việt](customization.vi.md)
+
 ## 1. Fix the globs — do this first
 
 The rule files default to a **layered-by-type** layout, matching a real internal NestJS reference repo used to build this kit:
