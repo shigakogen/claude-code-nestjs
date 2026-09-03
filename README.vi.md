@@ -36,6 +36,8 @@ Trong phiên, gõ `/onboard`. Nó đọc codebase và đề xuất chính xác n
 
 Nếu service này gọi hoặc được gọi bởi service khác (REST, Kafka, RabbitMQ, Redis pub/sub, WebSocket/socket.io), chạy tiếp skill `update-service-map` — nó quét code tìm lời gọi ra và listener nhận vào, đề xuất nội dung cho `SERVICE_MAP.md` để bạn xác nhận. Bỏ qua bước này nếu service độc lập, không giao tiếp với service nào khác.
 
+Khi `SERVICE_MAP.md` đã ổn định, chạy `/service-flow` để có sơ đồ Mermaid luồng xử lý *nội bộ* của service (điểm nhận vào → xử lý → lưu trữ → đầu ra) — ghi vào `FLOW.md`. Tuỳ chọn; bỏ qua nếu service chỉ CRUD đơn giản, không có gì đáng vẽ.
+
 Kiểm tra bằng `/memory`, `/agents`, `/mcp`, `/context`. Rồi commit `.claude/` và `.mcp.json` để cả team dùng chung.
 
 Gỡ ra: `~/tools/claude-code-nestjs/uninstall.sh .`
@@ -87,7 +89,7 @@ CLAUDE.md              sinh ở gốc repo — dưới 60 dòng, nạp MỌI lư
 ├── agents/            context riêng, model rẻ hơn, danh sách tool hẹp
 ├── skills/             quy trình đóng gói; chỉ metadata nạp cho tới khi được kích hoạt
 ├── hooks/              guardrail tất định
-├── commands/           /onboard  /review  /fix-test
+├── commands/           /onboard  /review  /fix-test  /service-flow
 └── settings.json       permissions + đấu nối hook (nên commit)
 .mcp.json               ba server, không phải mười lăm
 ```

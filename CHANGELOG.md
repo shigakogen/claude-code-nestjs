@@ -7,6 +7,13 @@ versioning follows [SemVer](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- New slash command `/service-flow`: renders a Mermaid diagram of the service's *internal*
+  processing flow (entry point → processing steps → storage → output) from the actual code,
+  written to `FLOW.md`. Complements `SERVICE_MAP.md` (external interface only) rather than
+  duplicating it — the command stops and flags a mismatch if the diagram's boundary (Kafka/
+  RabbitMQ/REST/WebSocket in-out) disagrees with `SERVICE_MAP.md` instead of picking one
+  silently. `/onboard` now suggests it after `update-service-map`, once a service's flow
+  looks complex enough to be worth diagramming.
 - README: an optional "keep it local, not shared with the team" section documenting
   `.git/info/exclude` as an alternative to committing the kit — for trying it on a shared
   repo before proposing it to the team.

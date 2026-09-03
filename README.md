@@ -39,6 +39,8 @@ Inside the session run `/onboard`. It reads the codebase and proposes the exact 
 
 If this service calls or is called by other services (REST, Kafka, RabbitMQ, Redis pub/sub, WebSocket/socket.io), run the `update-service-map` skill next — it greps the code for outbound calls and inbound listeners and proposes `SERVICE_MAP.md`'s content for you to confirm. Skip it for a standalone service with no inter-service traffic.
 
+Once `SERVICE_MAP.md` is stable, run `/service-flow` for a Mermaid diagram of the service's *internal* processing flow (entry point → processing → storage → output) — written to `FLOW.md`. Optional; skip it for a simple CRUD service with nothing worth diagramming.
+
 Verify with `/memory`, `/agents`, `/mcp`, `/context`. Then commit `.claude/` and `.mcp.json` so the whole team shares the setup.
 
 Removing it: `~/tools/claude-code-nestjs/uninstall.sh .`
@@ -90,7 +92,7 @@ CLAUDE.md              rendered at the repo root — under 60 lines, loaded ever
 ├── agents/            separate context, cheaper model, narrow tool allowlist
 ├── skills/            packaged workflows; only metadata is loaded until triggered
 ├── hooks/             deterministic guardrails
-├── commands/          /onboard  /review  /fix-test
+├── commands/          /onboard  /review  /fix-test  /service-flow
 └── settings.json      permissions + hook wiring (commit this)
 .mcp.json              three servers, not fifteen
 ```

@@ -17,3 +17,7 @@ Nếu service này giao tiếp với service khác (REST, Kafka, RabbitMQ, Redis
 WebSocket/socket.io...), gợi ý người dùng chạy skill `update-service-map` sau khi khảo sát
 xong để dựng bản nháp đầu tiên cho `SERVICE_MAP.md` — đừng lặp lại việc quét đó ở bước
 khảo sát này.
+
+Nếu service có luồng xử lý nội bộ đủ phức tạp để đáng vẽ (nhiều bước xử lý, nhiều tầng lưu
+trữ, queue/pipeline...), gợi ý người dùng chạy `/service-flow` để dựng `FLOW.md` — sau khi
+`SERVICE_MAP.md` đã ổn định.
