@@ -4,7 +4,7 @@ A reusable `.claude/` configuration kit for NestJS/TypeScript repositories — m
 
 Built on one constraint: **the always-loaded context must stay small.** Everything else loads on demand.
 
-[![ci](https://github.com/OWNER/claude-code-nestjs/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/claude-code-nestjs/actions/workflows/ci.yml)
+[![ci](https://github.com/shigakogen/claude-code-nestjs/actions/workflows/ci.yml/badge.svg)](https://github.com/shigakogen/claude-code-nestjs/actions/workflows/ci.yml)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 🇻🇳 [Tiếng Việt](README.vi.md)
@@ -14,7 +14,7 @@ Built on one constraint: **the always-loaded context must stay small.** Everythi
 ## Install
 
 ```bash
-git clone https://github.com/OWNER/claude-code-nestjs.git ~/tools/claude-code-nestjs
+git clone https://github.com/shigakogen/claude-code-nestjs.git ~/tools/claude-code-nestjs
 cd ~/work/my-nest-service
 ~/tools/claude-code-nestjs/install.sh .
 ```
@@ -158,7 +158,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Run `./tests/run.sh` before opening a PR
 
 ## Credits
 
-The layered approach — small memory file, path-scoped rules, subagents, skills, hooks, a short server list — follows Anubhav's write-up [*I Spent 6 Months Tuning Claude Code*](https://medium.com/data-science-collective/i-spent-6-months-tuning-claude-code-heres-the-exact-setup-that-finally-worked-b41c67628478). This repo applies it to NestJS, alongside a sibling kit for Spring Boot ([claude-code-springboot](https://github.com/OWNER/claude-code-springboot)).
+The layered approach — small memory file, path-scoped rules, subagents, skills, hooks, a short server list — follows Anubhav's write-up [*I Spent 6 Months Tuning Claude Code*](https://medium.com/data-science-collective/i-spent-6-months-tuning-claude-code-heres-the-exact-setup-that-finally-worked-b41c67628478). This repo applies it to NestJS, alongside a sibling kit for Spring Boot ([claude-code-springboot](https://github.com/shigakogen/claude-code-springboot)).
 
 ## License
 

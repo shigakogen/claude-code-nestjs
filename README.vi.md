@@ -11,7 +11,7 @@ Toàn bộ thiết kế xoay quanh một ràng buộc: **ngân sách context m�
 ## Cài đặt
 
 ```bash
-git clone https://github.com/OWNER/claude-code-nestjs.git ~/tools/claude-code-nestjs
+git clone https://github.com/shigakogen/claude-code-nestjs.git ~/tools/claude-code-nestjs
 cd ~/work/my-nest-service
 ~/tools/claude-code-nestjs/install.sh .
 ```
@@ -155,7 +155,7 @@ Xem [CONTRIBUTING.md](CONTRIBUTING.md). Chạy `./tests/run.sh` trước khi m�
 
 ## Nguồn tham khảo
 
-Cách tiếp cận phân lớp — memory file nhỏ, rule theo đường dẫn, subagent, skill, hook, danh sách server ngắn — theo bài viết [*I Spent 6 Months Tuning Claude Code*](https://medium.com/data-science-collective/i-spent-6-months-tuning-claude-code-heres-the-exact-setup-that-finally-worked-b41c67628478) của Anubhav. Repo này áp dụng vào NestJS, song song với kit anh em cho Spring Boot ([claude-code-springboot](https://github.com/OWNER/claude-code-springboot)).
+Cách tiếp cận phân lớp — memory file nhỏ, rule theo đường dẫn, subagent, skill, hook, danh sách server ngắn — theo bài viết [*I Spent 6 Months Tuning Claude Code*](https://medium.com/data-science-collective/i-spent-6-months-tuning-claude-code-heres-the-exact-setup-that-finally-worked-b41c67628478) của Anubhav. Repo này áp dụng vào NestJS, song song với kit anh em cho Spring Boot ([claude-code-springboot](https://github.com/shigakogen/claude-code-springboot)).
 
 ## Giấy phép
 
