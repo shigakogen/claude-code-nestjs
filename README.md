@@ -101,7 +101,7 @@ Each follows the same shape: *what to ask before writing code* → *ordered step
 | Hook | Event | Does |
 |---|---|---|
 | `session-start.sh` | SessionStart | one line of live context: branch, dirty files, Node version, compose up/down |
-| `gate-dangerous.sh` | PreToolUse `Bash` | **denies** force push, `reset --hard`, `git clean`, `publish`; **asks** on `git push`, `commit --amend`, `compose down -v`, and any command mentioning `prod`/`staging`/`uat` |
+| `gate-dangerous.sh` | PreToolUse `Bash` | **denies** force push, `reset --hard`, `git clean`, `publish`, and any push/merge/rebase/force branch-delete targeting `main`/`master`/`prod`; **asks** on push/merge/rebase touching `uat`, other pushes, `commit --amend`, `gh pr merge`, `compose down -v`, and any command mentioning `prod`/`staging`/`uat` |
 | `protect-migrations.sh` | PreToolUse `Edit\|Write` | **denies** edits to migration files already committed to git |
 | `format-source.sh` | PostToolUse | runs ESLint `--fix` then Prettier after every `.ts`/`.js` write, if configured |
 | `log-denied.sh` | PermissionDenied | appends to `.claude/logs/denied.jsonl` for later review |

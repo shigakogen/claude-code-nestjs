@@ -6,6 +6,15 @@ versioning follows [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+- `gate-dangerous.sh` is now branch-aware: any `git push`/`git merge`/`git rebase`/force
+  `git branch -D` targeting `main`, `master` or `prod` is now denied outright rather than
+  merely asked; the same operations touching `uat` always ask (never denied outright).
+  Push-target detection is best-effort string parsing of the command, with a fallback to
+  the repo's current branch when the command doesn't name one explicitly (plain `git
+  push`). `gh pr merge` — previously ungated entirely, since it doesn't contain the string
+  `git` — now always asks.
+
 ### Added
 - `SERVICE_MAP.md` — a new root file, rendered by `install.sh` alongside `CLAUDE.md` but
   never auto-loaded, documenting a service's external interface (outbound/inbound REST,

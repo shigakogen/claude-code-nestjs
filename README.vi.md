@@ -98,7 +98,7 @@ Mỗi skill cùng một khuôn: *hỏi gì trước khi viết code* → *các b
 | Hook | Sự kiện | Làm gì |
 |---|---|---|
 | `session-start.sh` | SessionStart | một dòng ngữ cảnh sống: branch, số file đổi, version Node, compose up/down |
-| `gate-dangerous.sh` | PreToolUse `Bash` | **chặn** force push, `reset --hard`, `git clean`, `publish`; **hỏi** với `git push`, `commit --amend`, `compose down -v`, và mọi lệnh nhắc `prod`/`staging`/`uat` |
+| `gate-dangerous.sh` | PreToolUse `Bash` | **chặn** force push, `reset --hard`, `git clean`, `publish`, và mọi push/merge/rebase/xóa nhánh cưỡng bức nhắm vào `main`/`master`/`prod`; **hỏi** với push/merge/rebase chạm `uat`, các push khác, `commit --amend`, `gh pr merge`, `compose down -v`, và mọi lệnh nhắc `prod`/`staging`/`uat` |
 | `protect-migrations.sh` | PreToolUse `Edit\|Write` | **chặn** sửa file migration đã commit vào git |
 | `format-source.sh` | PostToolUse | chạy ESLint `--fix` rồi Prettier sau mỗi lần ghi `.ts`/`.js`, nếu repo có cấu hình |
 | `log-denied.sh` | PermissionDenied | ghi vào `.claude/logs/denied.jsonl` để rà soát sau |

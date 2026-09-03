@@ -28,8 +28,17 @@ while IFS= read -r f; do
   fi
 done < <(find "$ROOT/template/.claude" -name '*.md' ! -name 'CLAUDE.md.template' | sort)
 
-head_ "4. Hooks emit valid JSON and gate the right commands"
+head_ "4. Hooks emit valid JSON and gate the right commands (branch-aware)"
+rm -rf "$TMP" && mkdir -p "$TMP/repo"
+cd "$TMP/repo"
+git init -q && git config user.email t@t && git config user.name t
+git commit -q --allow-empty -m init
+git branch -m main
+git checkout -q -b uat
+git checkout -q -b feature/foo
+git checkout -q main
 export CLAUDE_PROJECT_DIR="$TMP/repo"
+
 check_decision() { # check_decision <script> <json-in> <expected: allow|deny|ask>
   local out dec
   out="$(printf '%s' "$2" | bash "$ROOT/template/.claude/hooks/$1" 2>/dev/null)"
@@ -41,7 +50,21 @@ check_decision gate-dangerous.sh '{"tool_input":{"command":"git push --force ori
 check_decision gate-dangerous.sh '{"tool_input":{"command":"git reset --hard HEAD~1"}}'      deny
 check_decision gate-dangerous.sh '{"tool_input":{"command":"npm run test"}}'                 allow
 check_decision gate-dangerous.sh '{"tool_input":{"command":"psql -h prod-db"}}'               ask
-check_decision gate-dangerous.sh '{"tool_input":{"command":"git push"}}'                      ask
+check_decision gate-dangerous.sh '{"tool_input":{"command":"git push"}}'                      deny
+check_decision gate-dangerous.sh '{"tool_input":{"command":"git push origin main"}}'          deny
+check_decision gate-dangerous.sh '{"tool_input":{"command":"git push origin master"}}'        deny
+check_decision gate-dangerous.sh '{"tool_input":{"command":"git push origin uat"}}'           ask
+check_decision gate-dangerous.sh '{"tool_input":{"command":"git push origin feature/foo"}}'   ask
+check_decision gate-dangerous.sh '{"tool_input":{"command":"git merge feature/foo"}}'         deny
+check_decision gate-dangerous.sh '{"tool_input":{"command":"gh pr merge 42"}}'                ask
+check_decision gate-dangerous.sh '{"tool_input":{"command":"git branch -D main"}}'            deny
+check_decision gate-dangerous.sh '{"tool_input":{"command":"git branch -D feature/foo"}}'     allow
+
+git checkout -q feature/foo
+check_decision gate-dangerous.sh '{"tool_input":{"command":"git merge main"}}'                allow
+git checkout -q uat
+check_decision gate-dangerous.sh '{"tool_input":{"command":"git merge main"}}'                ask
+git checkout -q main
 
 head_ "5. End-to-end install on a fixture repo"
 rm -rf "$TMP" && mkdir -p "$TMP/repo/src/controller" "$TMP/repo/src/migrations"
