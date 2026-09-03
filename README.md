@@ -37,6 +37,8 @@ claude
 
 Inside the session run `/onboard`. It reads the codebase and proposes the exact lines to correct in `CLAUDE.md` — real module names, real npm scripts, real modules. **Do this before anything else**; the generated file is a starting point, not a finished one.
 
+If this service calls or is called by other services (REST, Kafka, RabbitMQ, Redis pub/sub, WebSocket/socket.io), run the `update-service-map` skill next — it greps the code for outbound calls and inbound listeners and proposes `SERVICE_MAP.md`'s content for you to confirm. Skip it for a standalone service with no inter-service traffic.
+
 Verify with `/memory`, `/agents`, `/mcp`, `/context`. Then commit `.claude/` and `.mcp.json` so the whole team shares the setup.
 
 Removing it: `~/tools/claude-code-nestjs/uninstall.sh .`

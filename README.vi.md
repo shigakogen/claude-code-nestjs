@@ -34,6 +34,8 @@ claude
 
 Trong phiên, gõ `/onboard`. Nó đọc codebase và đề xuất chính xác những dòng cần sửa trong `CLAUDE.md` — tên module thật, npm script thật, module thật. **Làm việc này trước tiên**; file sinh ra chỉ là điểm khởi đầu.
 
+Nếu service này gọi hoặc được gọi bởi service khác (REST, Kafka, RabbitMQ, Redis pub/sub, WebSocket/socket.io), chạy tiếp skill `update-service-map` — nó quét code tìm lời gọi ra và listener nhận vào, đề xuất nội dung cho `SERVICE_MAP.md` để bạn xác nhận. Bỏ qua bước này nếu service độc lập, không giao tiếp với service nào khác.
+
 Kiểm tra bằng `/memory`, `/agents`, `/mcp`, `/context`. Rồi commit `.claude/` và `.mcp.json` để cả team dùng chung.
 
 Gỡ ra: `~/tools/claude-code-nestjs/uninstall.sh .`
