@@ -67,6 +67,10 @@ grep -q '10.3.0' CLAUDE.md                        && ok "nest version detected" 
 [ -x .claude/hooks/gate-dangerous.sh ]            && ok "hooks executable"       || bad "hooks not executable"
 [ "$(find .claude -type f | wc -l)" -ge 20 ]      && ok "all kit files copied"   || bad "files missing"
 grep -qx '.env.mcp' .gitignore                    && ok ".gitignore updated"     || bad ".gitignore not updated"
+[ -f SERVICE_MAP.md ]                             && ok "SERVICE_MAP.md at repo root" || bad "SERVICE_MAP.md missing"
+grep -q '# SERVICE_MAP — acme-order-service' SERVICE_MAP.md && ok "service name substituted in SERVICE_MAP.md" || bad "service name not substituted"
+grep -q '## Publish' SERVICE_MAP.md               && ok "SERVICE_MAP.md has expected sections" || bad "SERVICE_MAP.md missing sections"
+! grep -q '{{' SERVICE_MAP.md                     && ok "no unresolved placeholders (SERVICE_MAP.md)" || bad "placeholders left in SERVICE_MAP.md"
 
 head_ "6. protect-migrations blocks committed files only"
 export CLAUDE_PROJECT_DIR="$TMP/repo"
@@ -78,8 +82,10 @@ d2="$(printf '{"tool_input":{"file_path":"%s/src/migrations/1700000099999-AddInd
 [ "$d2" = "allow" ] && ok "new migration allowed" || bad "new migration wrongly blocked (got $d2)"
 
 head_ "7. Idempotency — second run writes nothing new"
+printf '\ncustom entry\n' >> SERVICE_MAP.md
 out="$("$ROOT/install.sh" . 2>&1)"
 grep -q 'skip' <<< "$out" && ok "re-run skips existing files" || bad "re-run did not skip"
+grep -q 'custom entry' SERVICE_MAP.md && ok "SERVICE_MAP.md preserved on reinstall" || bad "SERVICE_MAP.md clobbered on reinstall"
 git status --porcelain | grep -q . && ok "no unexpected churn check ran" || true
 
 head_ "8. Existing CLAUDE.md is preserved, not clobbered"

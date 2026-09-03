@@ -6,6 +6,21 @@ versioning follows [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- `SERVICE_MAP.md` — a new root file, rendered by `install.sh` alongside `CLAUDE.md` but
+  never auto-loaded, documenting a service's external interface (outbound/inbound REST,
+  Kafka/RabbitMQ/Redis pub-sub, WebSocket/socket.io, owned tables). Not asserted as fact —
+  the kit has no contract registry to check against, so every entry is inferred from code
+  and needs human confirmation.
+- New skill `update-service-map`: greps a repo for outbound calls and inbound
+  listeners/consumers across REST, Kafka, RabbitMQ, Redis pub/sub and WebSocket/socket.io,
+  and proposes edits to `SERVICE_MAP.md` for the user to confirm before writing.
+- `CLAUDE.md.template` and `service-layer.md` each gained one pointer line to
+  `SERVICE_MAP.md`; `/onboard` now suggests running `update-service-map` after the first
+  survey when a service talks to others.
+- Sibling kit `claude-code-workspace` (separate repo) for the cross-service tier this file
+  feeds into — see `docs/design.md`.
+
 ## [1.0.0] — 2026-09-03
 
 ### Added

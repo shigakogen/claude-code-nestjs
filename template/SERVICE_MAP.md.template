@@ -1,0 +1,32 @@
+# SERVICE_MAP — {{SERVICE_NAME}}
+
+<!--
+  Suy luận từ code qua skill `update-service-map` — hệ thống chưa có contract hình thức
+  (không OpenAPI registry, không schema registry), nên mọi mục dưới đây LUÔN cần người
+  xác nhận trước khi tin. Không tự động nạp file này ở mọi lượt (khác CLAUDE.md) — chỉ
+  đọc khi cần, xem docs/design.md.
+
+  Xoá những mục không dùng tới thay vì để trống mãi mãi. Xem docs/customization.md.
+-->
+
+## Gọi ra (REST/gRPC đồng bộ)
+-
+
+## Expose vào (REST endpoint service khác gọi tới)
+-
+
+## Publish (Kafka / RabbitMQ / Redis pub)
+-
+
+## Subscribe / Consume
+-
+
+## Realtime (WebSocket / socket.io)
+-
+
+## Sở hữu dữ liệu (bảng/collection service khác KHÔNG được đọc trực tiếp)
+-
+
+## Được gọi bởi
+Chưa xác định từ repo này — một service không thể tự biết ai gọi mình. Xem tầng workspace
+(`claude-code-workspace`) nếu hệ thống đã cài kit đó.

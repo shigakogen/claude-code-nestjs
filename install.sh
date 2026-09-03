@@ -66,6 +66,7 @@ copy() {
 step "Copying files"
 while IFS= read -r rel; do
   [ "$rel" = ".claude/CLAUDE.md.template" ] && continue
+  [ "$rel" = "SERVICE_MAP.md.template" ] && continue
   copy "$rel"
 done < <(cd "$SRC" && find . -type f | sed 's#^\./##' | sort)
 
@@ -125,6 +126,20 @@ else
   warn "Merge the two by hand later — duplicated rules cost tokens on every turn."
 fi
 
+# --- render service map -------------------------------------------------------
+# Root file, next to CLAUDE.md, but NOT auto-loaded — read on demand only.
+step "Installing service map"
+render_map() { sed -e "s|{{SERVICE_NAME}}|$name|g" "$SRC/SERVICE_MAP.md.template"; }
+if [ ! -e "$TARGET/SERVICE_MAP.md" ]; then
+  [ "$DRY" -eq 0 ] && render_map > "$TARGET/SERVICE_MAP.md"
+  printf '    %scopy%s  SERVICE_MAP.md %s(repo root)%s\n' "$G" "$N" "$D" "$N"
+elif [ "$FORCE" -eq 1 ]; then
+  [ "$DRY" -eq 0 ] && render_map > "$TARGET/SERVICE_MAP.md"
+  printf '    %sover%s  SERVICE_MAP.md %s(--force)%s\n' "$Y" "$N" "$D" "$N"
+else
+  printf '    %sskip%s  SERVICE_MAP.md %s(exists)%s\n' "$D" "$N" "$D" "$N"
+fi
+
 # --- gitignore ---------------------------------------------------------------
 step "Updating .gitignore"
 gi="$TARGET/.gitignore"
@@ -148,8 +163,9 @@ ${B}Next steps${N}
   2. Open ${B}claude${N} in the repo and run ${B}/onboard${N} — it inspects the codebase and
      proposes the exact lines to fix in CLAUDE.md (real modules, real npm scripts).
   3. Adjust ${B}globs:${N} in .claude/rules/*.md to match your package layout.
-  4. Verify with  /memory  /agents  /mcp  /context
-  5. Commit .claude/ and .mcp.json so the whole team gets the same setup.
+  4. Run the ${B}update-service-map${N} skill to fill in SERVICE_MAP.md from the code.
+  5. Verify with  /memory  /agents  /mcp  /context
+  6. Commit .claude/ and .mcp.json so the whole team gets the same setup.
 
   Docs: docs/customization.md · docs/troubleshooting.md
 EOF

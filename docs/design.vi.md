@@ -32,6 +32,24 @@ Ba phép thử cho một dòng ứng viên:
 
 Viết mệnh lệnh, không viết gợi ý. "Không bao giờ trả entity TypeORM từ controller" — không phải "nên trả DTO khi phù hợp". Ngôn ngữ mập mờ cho model chỗ để tự thương lượng với chính nó.
 
+## `SERVICE_MAP.md` — file ở root, không phải file memory
+
+`CLAUDE.md` và `SERVICE_MAP.md` nằm cạnh nhau ở root repo, nhưng nạp khác nhau. `CLAUDE.md`
+được import tự động, mọi lượt. `SERVICE_MAP.md` thì không — không có gì trong kit này
+`@`-import nó. Nó không tốn gì cho tới khi agent (hoặc bạn) đọc nó — đó chính là mục đích:
+đa số lượt không chạm tới service khác, và những lượt có chạm thì đã có `Read` miễn phí sẵn.
+
+Con trỏ giúp nó được phát hiện nằm ở lớp rẻ nhất có thể mang nó — một dòng trong `CLAUDE.md`
+và một dòng trong `service-layer.md`, cả hai chỉ nêu tên file, không nhúng nội dung. Skill
+`update-service-map` mới là thứ giữ nó trung thực: hệ thống này chưa có contract registry,
+nên mọi mục đều suy luận từ code và cần người xác nhận — cùng chuẩn "kiểm chứng được, không
+mô tả chung chung" như mọi thứ khác trong kit.
+
+Một repo đơn lẻ chỉ có thể mô tả nó gọi gì và expose gì — không bao giờ biết ai gọi nó. Với
+bức tranh xuyên service (tác động của một thay đổi contract, truy vết một sự cố xuyên nhiều
+service), xem kit anh em `claude-code-workspace`, cài một lần ở thư mục chứa repo này như
+một thư mục con anh em, không phải cài bên trong repo này.
+
 ## Lớp 2 — rule theo đường dẫn
 
 Frontmatter khai báo glob; file chỉ nạp khi agent chạm đường dẫn khớp. Sửa controller không phải trả phí cho quy ước migration.

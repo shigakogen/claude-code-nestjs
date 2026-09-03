@@ -24,7 +24,7 @@ echo "  .claude/  (agents, rules, skills, hooks, commands, settings)"
 echo "  .mcp.json  .env.mcp.example"
 echo "  the '@.claude/CLAUDE.md' import line in CLAUDE.md, if present"
 echo
-echo "It will NOT delete: your CLAUDE.md content, .env.mcp, .gitignore entries."
+echo "It will NOT delete: your CLAUDE.md content, SERVICE_MAP.md, .env.mcp, .gitignore entries."
 
 if [ "$YES" -eq 0 ]; then
   printf 'Continue? [y/N] '

@@ -12,3 +12,8 @@ Khảo sát repo này và trả về bản tóm tắt ngắn (tiếng Việt):
 7. Nêu 3-5 điểm rủi ro/mùi code đáng chú ý nhất kèm file:dòng.
 
 Cuối cùng, đề xuất những dòng cần chỉnh trong `.claude/CLAUDE.md` cho khớp repo này (chỉ đề xuất, chưa sửa).
+
+Nếu service này giao tiếp với service khác (REST, Kafka, RabbitMQ, Redis pub/sub,
+WebSocket/socket.io...), gợi ý người dùng chạy skill `update-service-map` sau khi khảo sát
+xong để dựng bản nháp đầu tiên cho `SERVICE_MAP.md` — đừng lặp lại việc quét đó ở bước
+khảo sát này.

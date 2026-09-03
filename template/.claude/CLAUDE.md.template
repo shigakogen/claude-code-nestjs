@@ -37,6 +37,7 @@ NestJS {{NEST_VERSION}} / Node {{NODE_VERSION}} / TypeORM / {{PKG_MANAGER}}. {{O
 - Cấu hình đọc qua `ConfigService.get<T>()` với namespace `registerAs`, không đọc thẳng `process.env[...]`.
 - Migration TypeORM: chỉ THÊM file mới trong `src/migrations/`. Không sửa/xóa file đã có.
 - Quan hệ TypeORM mặc định `eager: false` — không set `eager: true`, không dùng lazy relation kiểu `Promise<T>`.
+- Trước khi đổi/thêm lời gọi tới service khác (REST, Kafka, RabbitMQ, Redis pub/sub, WebSocket): xem và cập nhật `SERVICE_MAP.md` (skill `update-service-map`).
 
 ## Guardrails (Claude tuân thủ nguyên văn)
 - Trước khi sửa `controller/`, `service/`, `entity/`, hoặc `migrations/`: đọc file rule tương ứng

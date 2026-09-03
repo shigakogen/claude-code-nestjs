@@ -32,6 +32,25 @@ Three tests for a candidate line:
 
 Write imperatives, not suggestions. "Never return TypeORM entities from controllers" — not "prefer returning DTOs where appropriate". Hedged language gives the model room to negotiate with itself.
 
+## `SERVICE_MAP.md` — a root file, not a memory file
+
+`CLAUDE.md` and `SERVICE_MAP.md` sit next to each other at the repo root, but they load
+differently. `CLAUDE.md` is imported automatically, every turn. `SERVICE_MAP.md` is not —
+nothing in this kit `@`-imports it. It costs nothing until the agent (or you) reads it,
+which is the point: most turns never touch another service, and the ones that do already
+have `Read` for free.
+
+The pointer that makes it discoverable lives at the cheapest layer that can carry it — one
+line in `CLAUDE.md` and one line in `service-layer.md`, both just naming the file, not
+inlining its content. The `update-service-map` skill is what keeps it honest: this system
+has no contract registry, so every entry is inferred from code and needs a human to confirm
+it — the same "checkable, not descriptive" bar as everything else in this kit.
+
+A single repo can only ever describe what it calls and what it exposes — never who calls
+it. For the cross-service picture (impact of a contract change, tracing an incident across
+services), see the sibling `claude-code-workspace` kit, installed once at the folder that
+contains this repo as a sibling, not inside it.
+
 ## Layer 2 — path-scoped rules
 
 Frontmatter declares the globs; the file loads only when the agent touches a matching path. Editing a controller does not pay for migration conventions.

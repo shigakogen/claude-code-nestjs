@@ -112,7 +112,20 @@ Respond in English. Code, identifiers, commit messages and log messages in Engli
 
 The frontmatter keys (`name`, `description`, `globs`, `tools`, `model`, `allowed-tools`) must stay in English regardless.
 
-## 9. Team rollout
+## 9. `SERVICE_MAP.md` and the transports you actually use
+
+The shipped template lists six sections (outbound REST, inbound REST, publish, consume,
+realtime, data ownership) because the kit doesn't know in advance which of REST, Kafka,
+RabbitMQ, Redis pub/sub or WebSocket/socket.io a given service actually speaks. Once you
+know, delete the sections that will never apply rather than leaving them empty forever — an
+empty heading invites the `update-service-map` skill (and future readers) to wonder whether
+it was never filled in or genuinely doesn't apply.
+
+If this service talks to others over a transport not listed at all (gRPC, GraphQL
+federation, SQS/SNS...), add a section for it and extend the `update-service-map` skill's
+grep list for that transport's client/listener calls or decorators.
+
+## 10. Team rollout
 
 Commit `.claude/` and `.mcp.json`. Do not commit `.env.mcp` or `.claude/settings.local.json` — the installer adds both to `.gitignore`.
 

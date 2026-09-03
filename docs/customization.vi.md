@@ -112,7 +112,19 @@ Respond in English. Code, identifiers, commit messages and log messages in Engli
 
 Các key frontmatter (`name`, `description`, `globs`, `tools`, `model`, `allowed-tools`) phải luôn giữ tiếng Anh bất kể trường hợp nào.
 
-## 9. Triển khai cho cả team
+## 9. `SERVICE_MAP.md` và các kênh giao tiếp thực tế đang dùng
+
+Template mặc định liệt kê sáu mục (gọi ra REST, expose vào REST, publish, consume,
+realtime, sở hữu dữ liệu) vì kit không thể biết trước service nào dùng REST, Kafka,
+RabbitMQ, Redis pub/sub hay WebSocket/socket.io. Khi đã biết rõ, xóa những mục không bao
+giờ dùng tới thay vì để trống mãi mãi — một mục trống khiến skill `update-service-map` (và
+người đọc sau này) không biết là chưa điền hay đúng là không áp dụng.
+
+Nếu service này giao tiếp qua một kênh chưa có trong danh sách (gRPC, GraphQL federation,
+SQS/SNS...), thêm mục mới cho nó và mở rộng danh sách grep của skill `update-service-map`
+theo client/listener call hoặc decorator của kênh đó.
+
+## 10. Triển khai cho cả team
 
 Commit `.claude/` và `.mcp.json`. Không commit `.env.mcp` hay `.claude/settings.local.json` — installer đã thêm cả hai vào `.gitignore`.
 

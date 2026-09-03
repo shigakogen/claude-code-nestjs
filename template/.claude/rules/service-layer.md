@@ -30,3 +30,6 @@ globs:
 ## Test
 - Service test là unit test với `@nestjs/testing` (`Test.createTestingModule`) + mock provider, không kết nối DB thật.
 - Mỗi nhánh nghiệp vụ mới cần ít nhất một test cho case thành công và một cho case lỗi.
+
+## Giao tiếp liên service
+- Thêm/sửa lời gọi tới service khác (`HttpService`/axios, client `@nestjs/microservices` cho Kafka/RabbitMQ, Redis pub, `@WebSocketGateway().emit`/socket.io) hoặc thêm listener nhận sự kiện từ service khác (Kafka/RabbitMQ `@MessagePattern`/`@EventPattern`, Redis subscriber, `@SubscribeMessage`): chạy skill `update-service-map` để cập nhật `SERVICE_MAP.md` ở root repo.
